@@ -13,4 +13,5 @@ def find_number_of_times_measurement_increases(measurements):
             number_of_times_measurement_increases += 1
     return number_of_times_measurement_increases
 
-measurements = read_measurements('input.txt')
+measurements = read_measurements('./2021/day01/input.txt')
+print("Number of times the measurement increases: " + str(find_number_of_times_measurement_increases(measurements)))
