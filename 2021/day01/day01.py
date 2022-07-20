@@ -1,5 +1,7 @@
 import sys
 
+# -------- Part 1 ----------
+
 # read input file and return the list of measurements
 def read_measurements(path):
     with open(path) as file:
@@ -15,3 +17,5 @@ def find_number_of_times_measurement_increases(measurements):
 
 measurements = read_measurements('./2021/day01/input.txt')
 print("Number of times the measurement increases: " + str(find_number_of_times_measurement_increases(measurements)))
+
+# -------- Part 2 ----------
