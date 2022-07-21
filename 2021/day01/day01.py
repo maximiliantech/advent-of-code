@@ -20,4 +20,10 @@ print("Number of times the measurement increases: " + str(find_number_of_times_m
 
 # -------- Part 2 ----------
 def find_number_of_times_measurement_increases_in_three_window(measurements):
-    pass
+    number_of_increases = 0
+    for i in range(len(measurements) - 3):
+        if measurements[i] + measurements[i+1] + measurements[i+2] < measurements[i+1] + measurements[i+2] + measurements[i+3]:
+            number_of_increases += 1
+    return number_of_increases
+
+print("Number of times the measurement increases in a three window: " + str(find_number_of_times_measurement_increases_in_three_window(measurements)))
