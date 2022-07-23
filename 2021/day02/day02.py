@@ -1,4 +1,3 @@
-from importlib.resources import read_binary
 import sys
 
 # Part 1
