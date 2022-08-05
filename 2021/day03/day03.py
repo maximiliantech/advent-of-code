@@ -9,8 +9,6 @@ def read_diagnostic_report(path):
 def get_most_and_least_common_bits(array):
     count_zero = 0
     count_one = 0
-    most_common_bit = 0
-    least_common_bit = 0
 
     for bit in array:
         if bit == 1:
@@ -18,15 +16,8 @@ def get_most_and_least_common_bits(array):
         else:
             count_zero += 1
     
-    # decide which bit is the most common and least common
-    if count_zero > count_one:
-        most_common_bit = 0
-        least_common_bit = 1
-    else:
-        most_common_bit = 1
-        least_common_bit = 0
-    
-    return most_common_bit, least_common_bit
+    # decide which bit is the most common and least common and return the result
+    return (0,1) if count_zero > count_one else (1,0)
 
 
 def calculate_power_consumption(input):
