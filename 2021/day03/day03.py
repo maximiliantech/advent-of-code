@@ -1,5 +1,5 @@
 # Part 1
-''' read input file and return the list of measurements '''
+''' read input file and return a 2D-array of the input binary numbers '''
 def read_diagnostic_report(path):
     with open(path) as file:
         # returns a 2D-array of the input binary numbers
