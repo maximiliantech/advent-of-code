@@ -1,8 +1,5 @@
 # Part 1
 # read input file and return the list of measurements
-from math import gamma
-
-
 def read_diagnostic_report(path):
     with open(path) as file:
         # returns a 2D-array of the input binary numbers
