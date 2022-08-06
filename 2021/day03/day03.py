@@ -19,10 +19,12 @@ def get_most_and_least_common_bits(array):
     # decide which bit is the most common and least common and return the result
     return (0,1) if count_zero > count_one else (1,0)
 
+def zip_binary_array(array):
+    return [list(bit) for bit in zip(*array)]
 
 def calculate_power_consumption(input):
     # zip the original input array to iterate over the columns
-    zipped_input = [list(bit) for bit in zip(*input)]
+    zipped_input = zip_binary_array(input)
     gamma = ''
     epsilon = ''
     for array in zipped_input:
@@ -36,3 +38,11 @@ def calculate_power_consumption(input):
 report = read_diagnostic_report('./2021/day03/input.txt')
 power_consumption = calculate_power_consumption(report)
 print("The power consumption is: ", power_consumption)
+
+# Part 2
+
+def calculate_life_supporting_rate(input):
+    oxygen_generator_rating = 0
+    co2_scrubber_rating = 0
+
+    zipped_input = zip_binary_array(input)
