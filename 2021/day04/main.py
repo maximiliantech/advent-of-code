@@ -6,12 +6,11 @@ class BingoCard:
         self.board = self.string_board_to_3D_array(board)
     
     def string_board_to_3D_array(self, board: str) -> list:
-        help_array = []
+        board_2D = []
         array = board.split("\n")
         for row in array:
-            help_array.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
-        print(help_array)
-        return help_array
+            board_2D.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
+        return board_2D
 
 def remove_all_occ_of_el_from_arr(array, element) -> list:
     return [x for x in array if x != element]
