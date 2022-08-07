@@ -27,7 +27,7 @@ def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     return sequence, boards
 
 def part_one(path: str) -> int:
-    sequence, borads = read_input(path)
+    sequence, boards = read_input(path)
     return 0
 
 if __name__ == "__main__": 
