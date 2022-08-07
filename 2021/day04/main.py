@@ -9,9 +9,15 @@ class BingoCard:
         help_array = []
         array = board.split("\n")
         for row in array:
-            help_array.append(row.split(" "))
+            help_array.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
         print(help_array)
         return help_array
+
+def remove_all_occ_of_el_from_arr(array, element) -> list:
+    return [x for x in array if x != element]
+
+def convert_array_from_string_to_int(array) -> list:
+    return [int(numeric_string) for numeric_string in array]    
 
 def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     with open(path) as f:
