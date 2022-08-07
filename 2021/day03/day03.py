@@ -51,7 +51,7 @@ def get_most_common_value(array):
             count_zero += 1
     
     # decide which bit is the most common and least common and return the result
-    return (1,0) if count_one >= count_zero else (0,1)
+    return 1 if count_one >= count_zero else 0
 
 def get_least_common_value(array):
     count_zero = 0
@@ -64,21 +64,16 @@ def get_least_common_value(array):
             count_zero += 1
     
     # decide which bit is the most common and least common and return the result
-    return (0,1) if count_zero >= count_one else (1,0)
+    return 0 if count_zero >= count_one else 1 
 
-def calculate_oxygen_generator_rating(input):
-    zipped_input = zip_binary_array(input)
-    help_array = []
-    for array in zipped_input-1:
-        most_common_value = get_most_common_value()
+def calculate(input):
+    for bit_position in range(len(input[0])-1):
+        pass
 
-def calculate_co2_scrubber_rating(input):
-    pass
+    return ("0","0")    
 
 def calculate_life_supporting_rate(input):
-    oxygen_generator_rating = calculate_oxygen_generator_rating(input)
-    co2_scrubber_rating = calculate_co2_scrubber_rating(input)
-
+    oxygen_generator_rating, co2_scrubber_rating = calculate(input)
     return (int(oxygen_generator_rating, 2) * int(co2_scrubber_rating, 2))
 
 life_supporting_rate = calculate_life_supporting_rate(report)
