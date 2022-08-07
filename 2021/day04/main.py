@@ -18,6 +18,9 @@ def remove_all_occ_of_el_from_arr(array, element) -> list:
 def convert_array_from_string_to_int(array) -> list:
     return [int(numeric_string) for numeric_string in array]    
 
+''' Reads input .txt from path.
+    Transfrom the first line of numbers to the sequence for Bingo Game
+    The rest of the input are transformed to BingoCards '''
 def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     with open(path) as f:
         file = f.read().split("\n\n")
