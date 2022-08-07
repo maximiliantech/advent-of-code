@@ -2,7 +2,8 @@ from dataclasses import dataclass
 
 @dataclass
 class BingoCard:
-    pass
+    def __init__(self, board: str) -> None:
+        pass
 
 def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     with open(path) as f:
@@ -10,8 +11,12 @@ def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
 
     sequence = list(map(int, file[0].split(",")))
 
+    # get the rest of the boards
     boards = []
-    return sequence, boards   
+    for board in file[1:]:
+        boards.append(BingoCard(board))
+    
+    return sequence, boards
 
 def part_one(path: str) -> int:
     sequence, borads = read_input(path)
