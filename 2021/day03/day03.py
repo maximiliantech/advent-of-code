@@ -35,12 +35,12 @@ def calculate_power_consumption(input):
     # mulitply the two binary numbers to get the integer power consumption
     return (int(gamma, 2) * int(epsilon, 2))
 
-report = read_diagnostic_report('./2021/day03/input_test.txt')
+report = read_diagnostic_report('./2021/day03/input.txt')
 power_consumption = calculate_power_consumption(report)
 print("The power consumption is: ", power_consumption)
 
 # --------------- Part 2 ------------------
-def get_most_common_value(array):
+def get_most_common_indices(array):
     count_zero = 0
     count_one = 0
 
@@ -50,10 +50,12 @@ def get_most_common_value(array):
         else:
             count_zero += 1
     
-    # decide which bit is the most common and least common and return the result
-    return 1 if count_one >= count_zero else 0
+    # decide which bit is the most common
+    common_value = 1 if count_one >= count_zero else 0
 
-def get_least_common_value(array):
+    return [i for i, x in enumerate(array) if x == common_value]
+
+def get_least_common_indices(array):
     count_zero = 0
     count_one = 0
 
@@ -63,17 +65,58 @@ def get_least_common_value(array):
         else:
             count_zero += 1
     
-    # decide which bit is the most common and least common and return the result
-    return 0 if count_zero >= count_one else 1 
+    # decide which bit is the least common
+    least_value = 0 if count_zero <= count_one else 1 
 
-def calculate(input):
-    for bit_position in range(len(input[0])-1):
-        pass
+    return [i for i, x in enumerate(array) if x == least_value]
 
-    return ("0","0")    
+def shortn_array(array, indices):
+    arr = []
+    for index in indices:
+        arr.append(array[index])
+    return arr
+
+def bit_array_to_string(bit_array):
+    bit_string = ""
+    for bit in bit_array:
+        bit_string += str(bit)
+    return bit_string    
+
+def calculate_oxygen_generator_rating(input):
+    find_oxygen_rate_array = input
+
+    for bit_position in range(len(input[0])):
+        # -------- For the Oxygen Part ----------
+        zip_oxygen_array = zip_binary_array(find_oxygen_rate_array)
+        common_indices = get_most_common_indices(zip_oxygen_array[bit_position])
+        find_oxygen_rate_array = shortn_array(find_oxygen_rate_array, common_indices)
+
+        # break if there is only one bit array left
+        if len(find_oxygen_rate_array) == 1:
+            break
+    
+    # return the bits as string
+    return bit_array_to_string(find_oxygen_rate_array[0])    
+
+def calculate_co2_scrubber_rating(input):
+    find_scrubber_rate_array = input
+
+    for bit_position in range(len(input[0])):
+        # -------- For the Scrubber Part -------------
+        zip_srcubber_array = zip_binary_array(find_scrubber_rate_array)
+        least_indices = get_least_common_indices(zip_srcubber_array[bit_position])
+        find_scrubber_rate_array = shortn_array(find_scrubber_rate_array, least_indices)
+
+        # break if there is only one bit array left
+        if len(find_scrubber_rate_array) == 1:
+            break
+    
+    # return the bits as string
+    return bit_array_to_string(find_scrubber_rate_array[0]) 
 
 def calculate_life_supporting_rate(input):
-    oxygen_generator_rating, co2_scrubber_rating = calculate(input)
+    oxygen_generator_rating = calculate_oxygen_generator_rating(input)
+    co2_scrubber_rating = calculate_co2_scrubber_rating(input)
     return (int(oxygen_generator_rating, 2) * int(co2_scrubber_rating, 2))
 
 life_supporting_rate = calculate_life_supporting_rate(report)
