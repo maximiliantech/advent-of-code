@@ -3,9 +3,9 @@ from dataclasses import dataclass
 @dataclass
 class BingoCard:
     def __init__(self, board: str) -> None:
-        self.board = self.string_board_to_3D_array(board)
+        self.board = self.string_board_to_2D_array(board)
     
-    def string_board_to_3D_array(self, board: str) -> list:
+    def string_board_to_2D_array(self, board: str) -> list:
         board_2D = []
         array = board.split("\n")
         for row in array:
