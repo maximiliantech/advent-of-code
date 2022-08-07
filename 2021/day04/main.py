@@ -3,7 +3,15 @@ from dataclasses import dataclass
 @dataclass
 class BingoCard:
     def __init__(self, board: str) -> None:
-        pass
+        self.board = self.string_board_to_3D_array(board)
+    
+    def string_board_to_3D_array(self, board: str) -> list:
+        help_array = []
+        array = board.split("\n")
+        for row in array:
+            help_array.append(row.split(" "))
+        print(help_array)
+        return help_array
 
 def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     with open(path) as f:
