@@ -16,11 +16,36 @@ class BingoCard:
             board_2D.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
         return board_2D
 
-    def get_sum_of_unmarked_numbers(self) -> list:
-        pass   
+    def get_sum_of_unmarked_numbers(self) -> int:
+        result = 0
+        for row_number in range(self.n_rows):
+            for column_number in range(self.n_columns):
+                if self.check_board[row_number][column_number] == 0:
+                    result += self.board[row_number][column_number]
+        return result
+    
+    def check_bingo_in_rows(self) -> tuple[bool, list[int]]:
+        for row_number in range(self.n_rows):
+            if self.check_board[row_number].count(1) == self.n_columns:
+                return (True, self.check_board[row_number])
+        return (False, [])
+
+    def check_bingo_in_columns(self) -> tuple[bool, list[int]]:
+        t_board = transform_array(self.board)
+        t_check_board = transform_array(self.check_board)
+        for column_number in range(self.n_columns):
+            if t_check_board[column_number].count(1) == self.n_rows:
+                return (True, t_board[column_number])
+        return (False, [])
 
     def check_bingo(self) -> tuple[bool, list[int]]:
-        return False, []
+        rows_check, row_array = self.check_bingo_in_rows()
+        column_check, column_array = self.check_bingo_in_columns()
+        if rows_check:
+            return (rows_check, row_array)
+        if column_check:
+            return (column_check, column_array)    
+        return (False, [])
 
     def add_number(self, number: int) -> None:
         for row_number in range(self.n_rows):
@@ -72,10 +97,10 @@ def part_one(path: str) -> int:
             check, marked_numbers_array = board.check_bingo()
             if check:
                 sum = board.get_sum_of_unmarked_numbers()
-                return sum * number
+                return (sum * number)
 
     return 0
 
 if __name__ == "__main__": 
-    input_path = "./2021/day04/input_test.txt"
+    input_path = "./2021/day04/input.txt"
     print("The result of Part 1:", part_one(input_path))
