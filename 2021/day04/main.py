@@ -87,6 +87,12 @@ def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
     
     return sequence, boards
 
+''' Last board has won if winning_boards has only 1s in the array'''
+def last_board_wins(winning_boards: list) -> bool:
+    if winning_boards.count(1) == len(winning_boards):
+        return True
+    return False   
+
 # ----------- End of General/Helper Methods --------------
 
 def part_one(path: str) -> int:
@@ -101,6 +107,27 @@ def part_one(path: str) -> int:
 
     return 0
 
+def part_two(path: str) -> int:
+    sequence, boards = read_input(path)
+    # create winning_boards array to mark which BingoCards have won
+    winning_boards = [0 for _ in range(len(boards))]
+    
+    for number in sequence:
+        for board_number in range(len(boards)):
+            board = boards[board_number]
+            board.add_number(number)
+            check, marked_numbers_array = board.check_bingo()
+            # if this board has a Bingo then mark this with one
+            if check:
+                winning_boards[board_number] = 1
+            # if last board has won then calculate the result of the last winning board
+            if last_board_wins(winning_boards):
+                sum = board.get_sum_of_unmarked_numbers()
+                return (sum * number)
+
+    return 0
+
 if __name__ == "__main__": 
     input_path = "./2021/day04/input.txt"
     print("The result of Part 1:", part_one(input_path))
+    print("The result of Part 2:", part_two(input_path))
