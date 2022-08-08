@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-# ------------- Begin of BingCard ----------------
+# ----------------- Begin of BingCard -------------------
 @dataclass
 class BingoCard:
     def __init__(self, board: str) -> None:
@@ -19,7 +19,9 @@ class BingoCard:
     def check_bingo(self) -> list:
         return []
 
-# ----------- End of BingoCard ------------------
+# ----------------- End of BingoCard ---------------------
+
+# ----------- Begin of General/Helper Methods --------------
 def transform_array(array):
     return [list(number) for number in zip(*array)]
 
@@ -47,6 +49,8 @@ def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
         boards.append(BingoCard(board))
     
     return sequence, boards
+
+# ----------- End of General/Helper Methods --------------
 
 def part_one(path: str) -> int:
     sequence, boards = read_input(path)
