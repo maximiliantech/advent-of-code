@@ -16,9 +16,14 @@ class BingoCard:
             board_2D.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
         return board_2D
 
-    def check_bingo(self) -> list:
+    def get_sum_of_unmarked_numbers() -> list:
+        pass   
+
+    def check_bingo(self) -> tuple[bool, list[int]]:
         return []
 
+    def add_number(number: int) -> None:
+        pass
 # ----------------- End of BingoCard ---------------------
 
 # ----------- Begin of General/Helper Methods --------------
@@ -32,7 +37,7 @@ def remove_all_occ_of_el_from_arr(array, element) -> list:
     return [x for x in array if x != element]
 
 def convert_array_from_string_to_int(array) -> list:
-    return [int(numeric_string) for numeric_string in array]    
+    return [int(numeric_string) for numeric_string in array]     
 
 ''' Reads input .txt from path.
     Transfrom the first line of numbers to the sequence for Bingo Game
@@ -54,6 +59,14 @@ def read_input(path: str) -> tuple[list[int], list[BingoCard]]:
 
 def part_one(path: str) -> int:
     sequence, boards = read_input(path)
+    for number in sequence:
+        for board in boards:
+            board.add_number(number)
+            check, marked_numbers_array = board.check_bingo()
+            if check:
+                sum = board.get_sum_of_unmarked_numbers()
+                return sum * number
+
     return 0
 
 if __name__ == "__main__": 
