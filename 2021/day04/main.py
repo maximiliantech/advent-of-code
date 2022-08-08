@@ -5,7 +5,9 @@ from dataclasses import dataclass
 class BingoCard:
     def __init__(self, board: str) -> None:
         self.board = self.string_board_to_2D_array(board)
-        self.check_board = self.create_empty_2D_array(self.board)
+        self.n_rows = len(self.board)
+        self.n_columns = len(self.board[0])
+        self.check_board = create_empty_2D_array(self.n_rows, self.n_columns)
     
     def string_board_to_2D_array(self, board: str) -> list:
         board_2D = []
@@ -14,15 +16,15 @@ class BingoCard:
             board_2D.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
         return board_2D
 
-    def create_empty_2D_array(self,array: list) -> list:
-        n_rows = len(array)
-        n_columns = len(array[0])
-        return [[0] * n_columns for _ in range(n_rows)] 
-
     def check_bingo(self) -> list:
-        return []  
+        return []
 
 # ----------- End of BingoCard ------------------
+def transform_array(array):
+    return [list(number) for number in zip(*array)]
+
+def create_empty_2D_array(n_rows, n_columns) -> list:
+    return [[0] * n_columns for _ in range(n_rows)]     
 
 def remove_all_occ_of_el_from_arr(array, element) -> list:
     return [x for x in array if x != element]
