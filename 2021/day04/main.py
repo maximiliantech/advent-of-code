@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
+# ------------- Begin of BingCard ----------------
 @dataclass
 class BingoCard:
     def __init__(self, board: str) -> None:
         self.board = self.string_board_to_2D_array(board)
-        self.check_board = BingoCheckCard(self)
+        self.check_board = self.create_empty_2D_array(self.board)
     
     def string_board_to_2D_array(self, board: str) -> list:
         board_2D = []
@@ -13,15 +14,15 @@ class BingoCard:
             board_2D.append(convert_array_from_string_to_int(remove_all_occ_of_el_from_arr(row.split(" "), "")))
         return board_2D
 
-@dataclass
-class BingoCheckCard:
-    def __init__(self, bingo_card: BingoCard) -> None:
-        self.check_board = self.create_empty_2D_array(bingo_card.board)
-
     def create_empty_2D_array(self,array: list) -> list:
         n_rows = len(array)
         n_columns = len(array[0])
         return [[0] * n_columns for _ in range(n_rows)] 
+
+    def check_bingo(self) -> list:
+        return []  
+
+# ----------- End of BingoCard ------------------
 
 def remove_all_occ_of_el_from_arr(array, element) -> list:
     return [x for x in array if x != element]
