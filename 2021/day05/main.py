@@ -14,10 +14,10 @@ class Line:
         self.end = end
 
     def is_horizontal(self) -> bool:
-        return True if self.begin.x == self.end.x else False
+        return True if self.begin.y == self.end.y else False
 
     def is_vertical(self) -> bool:
-        return True if self.begin.y == self.end.y else False    
+        return True if self.begin.x == self.end.x else False    
 
 @dataclass
 class CoordinateSystem:
@@ -26,16 +26,29 @@ class CoordinateSystem:
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
-        self.grid = create_empty_2D_array(y_max, x_max)
+        # adding +1 because it starts at 0,0
+        self.grid = create_empty_2D_array(y_max+1, x_max+1)
 
     def draw_horizontal_and_vertical_lines(self, lines: list[Line]) -> None:
         for line in lines:
-            # only draw horizontal or vertical lines
-            if line.is_horizontal or line.is_vertical:
-                self.draw_line(line)
+            if line.is_horizontal():
+                self.draw_horizontal_line(line)
+            if line.is_vertical():
+                self.draw_vertical_line(line)
 
+    def draw_horizontal_line(self, line: Line) -> None:
+        for x in range(line.begin.x, line.end.x+1):
+            self.grid[line.begin.y][x] += 1
+
+    def draw_vertical_line(self, line: Line) -> None:
+        for y in range(line.begin.y, line.end.y+1):
+            self.grid[y][line.begin.x] += 1
+
+    ''' Do not use it '''
     def draw_line(self, line: Line) -> None:
-        pass
+        for y in range(line.begin.y, line.end.y):
+            for x in range(line.begin.x, line.end.x):
+                self.grid[y][x] += 1        
 
     def get_number_of_coordinates_with_overlap(self, threshold: int) -> int:
         number_overlap = 0
@@ -120,6 +133,7 @@ def part_one(input_path: str) -> int:
     x_min, y_min, x_max, y_max = get_coordinate_system_boarders(lines)
     cs = CoordinateSystem(x_min, y_min, x_max, y_max)
     cs.draw_horizontal_and_vertical_lines(lines)
+    print_2D_array(cs.grid)
     result = cs.get_number_of_coordinates_with_overlap(2)
     return result
 
