@@ -21,11 +21,18 @@ class Line:
 
 @dataclass
 class CoordinateSystem:
-    def __init__(self, x_max: int, y_max: int) -> None:
+    def __init__(self,x_min: int, y_min: int, x_max: int, y_max: int) -> None:
+        self.x_min = x_min
+        self.y_min = y_min
+        self.x_max = x_max
+        self.y_max = y_max
         self.grid = create_empty_2D_array(y_max, x_max)
 
     def draw_horizontal_and_vertical_lines(self, lines: list[Line]):
-        pass    
+        pass  
+
+    def get_number_of_coordinates_with_overlap(self, threshold: int) -> int:
+        return 0
 
 # --------------- End of Classes ---------------
 
@@ -65,11 +72,45 @@ def get_coordinates_of_line(input_line: str) -> tuple[Coordinate, Coordinate]:
 
     return (begin_Coordinate, end_Coordinate)
 
+''' Calculate the Coordinate system boarders from the Line list '''
+def get_coordinate_system_boarders(lines: list[Line]) -> tuple[int, int, int, int]:
+    x_min = 0
+    y_min = 0
+    x_max = 0
+    y_max = 0
+    # iterate over the Lines and their Coordinates to calculate the boarders of the CoordinateSystem
+    for line in lines:
+        if line.begin.x < x_min:
+            x_min = line.begin.x
+        if line.end.x < x_min:
+            x_min = line.end.x
+        #------------------------
+        if line.begin.y < y_min:
+            y_min = line.begin.y
+        if line.end.y < y_min:
+            y_min = line.end.y 
+        #------------------------
+        if line.begin.x > x_max:
+            x_max = line.begin.x
+        if line.end.x > x_max:
+            x_max = line.end.x
+        #------------------------
+        if line.begin.y > y_max:
+            y_max = line.begin.y
+        if line.end.y > y_max:
+            y_max = line.end.y 
+
+    return (x_min, y_min, x_max, y_max)
+
 # --------------- End of Helper Methods ---------------    
 
 def part_one(input_path: str) -> int:
     lines = read_input(input_path)
-    return 0
+    x_min, y_min, x_max, y_max = get_coordinate_system_boarders(lines)
+    cs = CoordinateSystem(x_min, y_min, x_max, y_max)
+    cs.draw_horizontal_and_vertical_lines(lines)
+    result = cs.get_number_of_coordinates_with_overlap(2)
+    return result
 
 if __name__ == "__main__":
     input_path = "./2021/day05/input_test.txt"
