@@ -1,4 +1,14 @@
-def part_one(input_path) -> int:
+from dataclasses import dataclass
+
+@dataclass
+class Coordinate:
+    pass
+
+@dataclass
+class CoordinateSystem:
+    pass
+
+def part_one(input_path: str) -> int:
     return 0
 
 if __name__ == "__main__":
