@@ -28,11 +28,22 @@ class CoordinateSystem:
         self.y_max = y_max
         self.grid = create_empty_2D_array(y_max, x_max)
 
-    def draw_horizontal_and_vertical_lines(self, lines: list[Line]):
-        pass  
+    def draw_horizontal_and_vertical_lines(self, lines: list[Line]) -> None:
+        for line in lines:
+            # only draw horizontal or vertical lines
+            if line.is_horizontal or line.is_vertical:
+                self.draw_line(line)
+
+    def draw_line(self, line: Line) -> None:
+        pass
 
     def get_number_of_coordinates_with_overlap(self, threshold: int) -> int:
-        return 0
+        number_overlap = 0
+        for y_pos in range(len(self.grid)):
+            for x_pos in range(len(self.grid[0])):
+                if self.grid[y_pos][x_pos] >= threshold:
+                    number_overlap += 1
+        return number_overlap
 
 # --------------- End of Classes ---------------
 
