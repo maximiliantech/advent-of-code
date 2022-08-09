@@ -70,7 +70,7 @@ def print_2D_array(array: list) -> None:
     print("\n")
 
 ''' Creates a zero-2D-array based on number of columns and rows. '''
-def create_empty_2D_array(n_rows, n_columns) -> list:
+def create_empty_2D_array(n_rows: int, n_columns: int) -> list:
     return [[0] * n_columns for _ in range(n_rows)]   
 
 ''' This Method takes an input line as a string ("x1,y1 -> x2,y2"), extract the Coordinates and give them back as a tuple. '''
