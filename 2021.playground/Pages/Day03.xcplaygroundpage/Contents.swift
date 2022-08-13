@@ -22,6 +22,7 @@ func transform2DArray(array: [[Int]]) -> [[Int]] {
     return resultArray
 }
 
-print(partOne())
+// FIXME: Not everything implemented yet
+// print(partOne())
 
 //: [Next](@next)
