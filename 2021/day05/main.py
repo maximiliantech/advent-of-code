@@ -55,10 +55,43 @@ class CoordinateSystem:
                         self.grid[y][line.begin.x] += 1
                         y -= 1
 
-    def draw_diagonal_lines(self, line: Line) -> None:
-        for y in range(line.begin.y, line.end.y):
-            for x in range(line.begin.x, line.end.x):
-                self.grid[y][x] += 1        
+    def draw_diagonal_lines(self, lines: list[Line]) -> None:
+        for line in lines:
+            # short: check if diagonal a diagonal line
+            if line.is_horizontal() == False or line.is_vertical() == False:
+                # there are 4 possible line drawing directions
+                # 1. from top left to bottom right
+                if line.begin.x < line.end.x and line.begin.y < line.end.y:
+                    x = line.begin.x
+                    y = line.begin.y
+                    while x <= line.end.x and y <= line.end.y:
+                        self.grid[y][x] += 1
+                        x += 1
+                        y += 1
+                # 2. from top right to bottom left
+                if line.begin.x > line.end.x and line.begin.y > line.end.y:
+                    x = line.begin.x
+                    y = line.begin.y
+                    while x >= line.end.x and y >= line.end.y:
+                        self.grid[y][x] += 1
+                        x -= 1
+                        y -= 1
+                # 3. from bottom left to top right
+                if line.begin.x < line.end.x and line.begin.y > line.end.y:
+                    x = line.begin.x
+                    y = line.begin.y
+                    while x <= line.end.x and y >= line.end.y:
+                        self.grid[y][x] += 1
+                        x += 1
+                        y -= 1
+                # 4. from bottom right to top left
+                if line.begin.x > line.end.x and line.begin.y < line.end.y:
+                    x = line.begin.x
+                    y = line.begin.y
+                    while x >= line.end.x and y <= line.end.y:
+                        self.grid[y][x] += 1
+                        x -= 1
+                        y += 1
 
     def get_number_of_coordinates_with_overlap(self, threshold: int) -> int:
         number_overlap = 0
@@ -153,7 +186,7 @@ def part_two(input_path: str) -> int:
     cs = CoordinateSystem(x_min, y_min, x_max, y_max)
     cs.draw_horizontal_lines(lines)
     cs.draw_vertical_lines(lines)
-    #cs.draw_diagonal_lines(lines)
+    cs.draw_diagonal_lines(lines)
     result = cs.get_number_of_coordinates_with_overlap(2)
     return result    
 
