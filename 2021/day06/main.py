@@ -30,10 +30,10 @@ def part_two(input_path: str) -> int:
                 numbers.append(8)
                 continue
             numbers[i] -= 1
-        #print("After day: ", day, numbers)
+        print("After day: ", day)
     return len(numbers)
 
 if __name__ == "__main__":
-    input_path = "./2021/day06/input_test.txt"
+    input_path = "./2021/day06/input.txt"
     print("The result of Part 1:", part_one(input_path))
-    #print("The result of Part 2:", part_two(input_path))
+    print("The result of Part 2:", part_two(input_path))
