@@ -29,37 +29,33 @@ class CoordinateSystem:
         # adding +1 because it starts at 0,0
         self.grid = create_empty_2D_array(y_max+1, x_max+1)
 
-    def draw_horizontal_and_vertical_lines(self, lines: list[Line]) -> None:
+    def draw_horizontal_lines(self, lines: list[Line]) -> None:
         for line in lines:
             if line.is_horizontal():
-                self.draw_horizontal_line(line)
+                # if line goes from left to right
+                if line.end.x > line.begin.x:
+                    for x in range(line.begin.x, line.end.x+1):
+                        self.grid[line.begin.y][x] += 1
+                else : # else the line goes from right to left
+                    x = line.begin.x
+                    while line.end.x <= x:
+                        self.grid[line.begin.y][x] += 1
+                        x -= 1
+
+    def draw_vertical_lines(self, lines: list[Line]) -> None:
+        for line in lines:
             if line.is_vertical():
-                self.draw_vertical_line(line)
+                # if line goes from top to bottom
+                if line.end.y > line.begin.y:
+                    for y in range(line.begin.y, line.end.y+1):
+                        self.grid[y][line.begin.x] += 1
+                else : # else line goes from bottom to top
+                    y = line.begin.y
+                    while line.end.y <= y:
+                        self.grid[y][line.begin.x] += 1
+                        y -= 1
 
-    def draw_horizontal_line(self, line: Line) -> None:
-        # if line goes from left to right
-        if line.end.x > line.begin.x:
-            for x in range(line.begin.x, line.end.x+1):
-                self.grid[line.begin.y][x] += 1
-        else : # else the line goes from right to left
-            x = line.begin.x
-            while line.end.x <= x:
-                self.grid[line.begin.y][x] += 1
-                x -= 1
-
-    def draw_vertical_line(self, line: Line) -> None:
-        # if line goes from top to bottom
-        if line.end.y > line.begin.y:
-            for y in range(line.begin.y, line.end.y+1):
-                self.grid[y][line.begin.x] += 1
-        else : # else line goes from bottom to top
-            y = line.begin.y
-            while line.end.y <= y:
-                self.grid[y][line.begin.x] += 1
-                y -= 1
-
-    ''' Do not use it '''
-    def draw_line(self, line: Line) -> None:
+    def draw_diagonal_lines(self, line: Line) -> None:
         for y in range(line.begin.y, line.end.y):
             for x in range(line.begin.x, line.end.x):
                 self.grid[y][x] += 1        
@@ -146,10 +142,22 @@ def part_one(input_path: str) -> int:
     lines = read_input(input_path)
     x_min, y_min, x_max, y_max = get_coordinate_system_boarders(lines)
     cs = CoordinateSystem(x_min, y_min, x_max, y_max)
-    cs.draw_horizontal_and_vertical_lines(lines)
+    cs.draw_horizontal_lines(lines)
+    cs.draw_vertical_lines(lines)
     result = cs.get_number_of_coordinates_with_overlap(2)
     return result
+
+def part_two(input_path: str) -> int:
+    lines = read_input(input_path)
+    x_min, y_min, x_max, y_max = get_coordinate_system_boarders(lines)
+    cs = CoordinateSystem(x_min, y_min, x_max, y_max)
+    cs.draw_horizontal_lines(lines)
+    cs.draw_vertical_lines(lines)
+    #cs.draw_diagonal_lines(lines)
+    result = cs.get_number_of_coordinates_with_overlap(2)
+    return result    
 
 if __name__ == "__main__":
     input_path = "./2021/day05/input.txt"
     print("The result of Part 1:", part_one(input_path))
+    print("The result of Part 2:", part_two(input_path))
