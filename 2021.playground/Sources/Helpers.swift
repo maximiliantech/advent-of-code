@@ -1,5 +1,9 @@
 import Foundation
 
+public enum FileExtension: String {
+    case txt = "txt"
+}
+
 public func readInput(from fileURL: URL) -> String {
     do {
      // Get the saved data
@@ -15,8 +19,8 @@ public func readInput(from fileURL: URL) -> String {
     return ""
 }
 
-public func load(file named: String) -> String? {
-    guard let fileUrl = Bundle.main.url(forResource: named, withExtension: "txt") else {
+public func load(file named: String, ofType fileType: FileExtension) -> String? {
+    guard let fileUrl = Bundle.main.url(forResource: named, withExtension: fileType.rawValue) else {
         return nil
     }
 

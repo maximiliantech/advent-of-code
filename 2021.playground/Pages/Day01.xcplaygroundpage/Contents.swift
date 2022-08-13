@@ -1,7 +1,7 @@
 import Foundation
 
 func partOne() -> String {
-    let inputString = load(file: "input01")
+    let inputString = load(file: "input01", ofType: .txt)
     if let numbers = inputString?.split(separator: "\n").map({ Int($0)! }) {
         let result = zip(numbers, numbers.dropFirst())
             .lazy
@@ -14,7 +14,7 @@ func partOne() -> String {
 }
 
 func partTwo() -> String {
-    let inputString = load(file: "input01")
+    let inputString = load(file: "input01", ofType: .txt)
     if let numbers = inputString?.split(separator: "\n").map({ Int($0)! }) {
         let result = zip(numbers, numbers.dropFirst(3))
             .lazy
