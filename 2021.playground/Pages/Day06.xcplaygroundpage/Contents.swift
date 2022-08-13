@@ -4,7 +4,7 @@ import Foundation
 
 func partOne() -> String {
     // load input and remove \n
-    let input = load(file: "input06", ofType: .txt)?.replacingOccurrences(of: "\n", with: "")
+    let input = load(file: "input06_test", ofType: .txt)?.replacingOccurrences(of: "\n", with: "")
     // turn input to Int Array
     var numbers = input?.split(separator: ",").map({ Int($0)! })
     print("Initial state: ", numbers!)
@@ -22,5 +22,10 @@ func partOne() -> String {
     return numbers?.count.description ?? "0"
 }
 
+func partTwo() -> String {
+    return ""
+}
+
 print(partOne())
+print(partTwo())
 //: [Next](@next)
