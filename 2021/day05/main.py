@@ -37,12 +37,26 @@ class CoordinateSystem:
                 self.draw_vertical_line(line)
 
     def draw_horizontal_line(self, line: Line) -> None:
-        for x in range(line.begin.x, line.end.x+1):
-            self.grid[line.begin.y][x] += 1
+        # if line goes from left to right
+        if line.end.x > line.begin.x:
+            for x in range(line.begin.x, line.end.x+1):
+                self.grid[line.begin.y][x] += 1
+        else : # else the line goes from right to left
+            x = line.begin.x
+            while line.end.x <= x:
+                self.grid[line.begin.y][x] += 1
+                x -= 1
 
     def draw_vertical_line(self, line: Line) -> None:
-        for y in range(line.begin.y, line.end.y+1):
-            self.grid[y][line.begin.x] += 1
+        # if line goes from top to bottom
+        if line.end.y > line.begin.y:
+            for y in range(line.begin.y, line.end.y+1):
+                self.grid[y][line.begin.x] += 1
+        else : # else line goes from bottom to top
+            y = line.begin.y
+            while line.end.y <= y:
+                self.grid[y][line.begin.x] += 1
+                y -= 1
 
     ''' Do not use it '''
     def draw_line(self, line: Line) -> None:
@@ -133,10 +147,9 @@ def part_one(input_path: str) -> int:
     x_min, y_min, x_max, y_max = get_coordinate_system_boarders(lines)
     cs = CoordinateSystem(x_min, y_min, x_max, y_max)
     cs.draw_horizontal_and_vertical_lines(lines)
-    print_2D_array(cs.grid)
     result = cs.get_number_of_coordinates_with_overlap(2)
     return result
 
 if __name__ == "__main__":
-    input_path = "./2021/day05/input_test.txt"
+    input_path = "./2021/day05/input.txt"
     print("The result of Part 1:", part_one(input_path))
