@@ -9,17 +9,31 @@ def read_input(path: str) -> list[int]:
 
 def part_one(input_path: str) -> int:
     numbers = read_input(input_path)
-    print("Initial state: ", numbers)
+    #print("Initial state: ", numbers)
     for day in range(1,81):
         for i in range(len(numbers)):
-            lanternfish = numbers[i]
-            numbers[i] -= 1
-            if lanternfish == 0:
+            if numbers[i] == 0:
                 numbers[i] = 6
                 numbers.append(8)
+                continue
+            numbers[i] -= 1
+        #print("After day: ", day, numbers)
+    return len(numbers)
+
+def part_two(input_path: str) -> int:
+    numbers = read_input(input_path)
+    #print("Initial state: ", numbers)
+    for day in range(1,257):
+        for i in range(len(numbers)):
+            if numbers[i] == 0:
+                numbers[i] = 6
+                numbers.append(8)
+                continue
+            numbers[i] -= 1
         #print("After day: ", day, numbers)
     return len(numbers)
 
 if __name__ == "__main__":
-    input_path = "./2021/day06/input.txt"
+    input_path = "./2021/day06/input_test.txt"
     print("The result of Part 1:", part_one(input_path))
+    #print("The result of Part 2:", part_two(input_path))
