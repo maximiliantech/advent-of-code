@@ -21,7 +21,7 @@ def calculate_horizontal_and_depth(measurements):
 
     return horizontal_count * depth_count
 
-measurements = read_measurements('./2021/day02/input.txt')
+measurements = read_measurements('./2021-python/day02/input.txt')
 print("Ergebnis von Tag 2.1:", calculate_horizontal_and_depth(measurements))
 
 # Part 2

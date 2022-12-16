@@ -34,6 +34,6 @@ def part_two(input_path: str) -> int:
     return len(numbers)
 
 if __name__ == "__main__":
-    input_path = "./2021/day06/input.txt"
+    input_path = "./2021-python/day06/input.txt"
     print("The result of Part 1:", part_one(input_path))
     print("The result of Part 2:", part_two(input_path))

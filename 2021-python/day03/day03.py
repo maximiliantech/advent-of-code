@@ -35,7 +35,7 @@ def calculate_power_consumption(input):
     # mulitply the two binary numbers to get the integer power consumption
     return (int(gamma, 2) * int(epsilon, 2))
 
-report = read_diagnostic_report('./2021/day03/input.txt')
+report = read_diagnostic_report('./2021-python/day03/input.txt')
 power_consumption = calculate_power_consumption(report)
 print("The power consumption is: ", power_consumption)
 
