@@ -4,46 +4,68 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 )
 
 func main() {
-	lines := readAllLines("./2022/day01/input.txt")
+	lines := readAllLines("./2022/day01/input_test.txt")
 
 	log.Println("Day 01 Part 01")
 	partOne(lines)
+	//log.Println("Day 01 Part 02")
+	//partTwo(lines)
 }
 
 func partOne(lines []string) {
-	elfCaloriesMap := getSummedUpCaloriesPerElf(lines)
-	elf, calories := getElfMostCalories(elfCaloriesMap)
-	log.Println(elf, calories)
-}
-
-func getElfMostCalories(elfMap map[string]int) (string, int) {
-	var elf = "1"
-	var calories = 0
-	for key, value := range elfMap {
-		if value > calories {
-			calories = value
-			elf = key
-		}
+	elves := getElves(lines)
+	elvesMostCalories := getElvesMostCalories(elves, 1)
+	solution := 0
+	for _, elf := range elvesMostCalories {
+		solution += elf.CaloriesSum
 	}
-	return elf, calories
+	log.Println(solution)
 }
 
-func getSummedUpCaloriesPerElf(lines []string) map[string]int {
-	var elfCalories = make(map[string]int)
-	var elfNumber = 1
-	for _, stringCalories := range lines {
-		if stringCalories == "" {
+func partTwo(lines []string) {
+	elves := getElves(lines)
+	elvesMostCalories := getElvesMostCalories(elves, 3)
+	solution := 0
+	for _, elf := range elvesMostCalories {
+		solution += elf.CaloriesSum
+	}
+	log.Println(solution)
+}
+
+func getElvesMostCalories(elfs []Elf, count int) []Elf {
+	elvesMostCalories := make([]Elf, count)
+	sort.Slice(elfs, func(i, j int) bool {
+		return elfs[i].CaloriesSum > elfs[j].CaloriesSum
+	})
+	for i, _ := range elvesMostCalories {
+		elvesMostCalories[i] = elfs[i]
+	}
+	return elvesMostCalories
+}
+
+type Elf struct {
+	Number      string
+	CaloriesSum int
+}
+
+func getElves(lines []string) []Elf {
+	var elves []Elf
+	var elfNumber = 0
+	for _, line := range lines {
+		if line == "" {
 			elfNumber++
 		} else {
-			calorie, _ := strconv.Atoi(stringCalories)
-			elfCalories[strconv.Itoa(elfNumber)] += calorie
+			elves[elfNumber].Number = strconv.Itoa(elfNumber + 1)
+			calorie, _ := strconv.Atoi(line)
+			elves[elfNumber].CaloriesSum += calorie
 		}
 	}
-	return elfCalories
+	return elves
 }
 
 func readAllLines(filePath string) []string {
