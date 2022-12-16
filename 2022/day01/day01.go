@@ -20,10 +20,10 @@ func partOne(lines []string) {
 	log.Println(elf, calories)
 }
 
-func getElfMostCalories(mapp map[string]int) (string, int) {
+func getElfMostCalories(elfMap map[string]int) (string, int) {
 	var elf string = "1"
 	var calories int = 0
-	for key, value := range mapp {
+	for key, value := range elfMap {
 		if value > calories {
 			calories = value
 			elf = key
