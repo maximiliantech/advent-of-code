@@ -15,7 +15,7 @@ func main() {
 }
 
 func partOne(lines []string) {
-	elfCaloriesMap := getAllocatedCaloriesPerElf(lines)
+	elfCaloriesMap := getSummedUpCaloriesPerElf(lines)
 	elf, calories := getElfMostCalories(elfCaloriesMap)
 	log.Println(elf, calories)
 }
@@ -32,7 +32,7 @@ func getElfMostCalories(elfMap map[string]int) (string, int) {
 	return elf, calories
 }
 
-func getAllocatedCaloriesPerElf(lines []string) map[string]int {
+func getSummedUpCaloriesPerElf(lines []string) map[string]int {
 	var elfCalories = make(map[string]int)
 	var elfNumber = 1
 	for _, stringCalories := range lines {
