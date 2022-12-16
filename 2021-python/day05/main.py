@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from tkinter import Y
 # ------------- Begin of Classes ----------------
 @dataclass
 class Coordinate:
