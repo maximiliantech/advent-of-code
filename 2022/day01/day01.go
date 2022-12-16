@@ -21,8 +21,8 @@ func partOne(lines []string) {
 }
 
 func getElfMostCalories(elfMap map[string]int) (string, int) {
-	var elf string = "1"
-	var calories int = 0
+	var elf = "1"
+	var calories = 0
 	for key, value := range elfMap {
 		if value > calories {
 			calories = value
@@ -34,7 +34,7 @@ func getElfMostCalories(elfMap map[string]int) (string, int) {
 
 func getAllocatedCaloriesPerElf(lines []string) map[string]int {
 	var elfCalories = make(map[string]int)
-	var elfNumber int = 1
+	var elfNumber = 1
 	for _, stringCalories := range lines {
 		if stringCalories == "" {
 			elfNumber++
