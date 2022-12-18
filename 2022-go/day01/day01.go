@@ -14,8 +14,8 @@ func main() {
 
 	log.Println("Day 01 Part 01")
 	partOne(lines)
-	//log.Println("Day 01 Part 02")
-	//partTwo(lines)
+	log.Println("Day 01 Part 02")
+	partTwo(lines)
 }
 
 func partOne(lines string) {
@@ -28,8 +28,14 @@ func partOne(lines string) {
 	log.Println(solution)
 }
 
-func partTwo(lines []string) {
-
+func partTwo(lines string) {
+	var elves = getElves(lines)
+	elvesMostCalories := getElvesMostCalories(elves, 3)
+	solution := 0
+	for _, elf := range elvesMostCalories {
+		solution += elf.CaloriesSum
+	}
+	log.Println(solution)
 }
 
 func getElvesMostCalories(elves []Elf, count int) []Elf {
