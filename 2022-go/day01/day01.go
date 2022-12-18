@@ -1,15 +1,16 @@
 package main
 
 import (
-	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	lines := readAllLines("./2022-go/day01/input_test.txt")
+	lines := readAllLines("./2022-go/day01/input.txt")
 
 	log.Println("Day 01 Part 01")
 	partOne(lines)
@@ -17,8 +18,8 @@ func main() {
 	//partTwo(lines)
 }
 
-func partOne(lines []string) {
-	elves := getElves(lines)
+func partOne(lines string) {
+	var elves = getElves(lines)
 	elvesMostCalories := getElvesMostCalories(elves, 1)
 	solution := 0
 	for _, elf := range elvesMostCalories {
@@ -28,22 +29,16 @@ func partOne(lines []string) {
 }
 
 func partTwo(lines []string) {
-	elves := getElves(lines)
-	elvesMostCalories := getElvesMostCalories(elves, 3)
-	solution := 0
-	for _, elf := range elvesMostCalories {
-		solution += elf.CaloriesSum
-	}
-	log.Println(solution)
+
 }
 
-func getElvesMostCalories(elfs []Elf, count int) []Elf {
+func getElvesMostCalories(elves []Elf, count int) []Elf {
 	elvesMostCalories := make([]Elf, count)
-	sort.Slice(elfs, func(i, j int) bool {
-		return elfs[i].CaloriesSum > elfs[j].CaloriesSum
+	sort.Slice(elves, func(i, j int) bool {
+		return elves[i].CaloriesSum > elves[j].CaloriesSum
 	})
 	for i, _ := range elvesMostCalories {
-		elvesMostCalories[i] = elfs[i]
+		elvesMostCalories[i] = elves[i]
 	}
 	return elvesMostCalories
 }
@@ -53,37 +48,33 @@ type Elf struct {
 	CaloriesSum int
 }
 
-func getElves(lines []string) []Elf {
+func getElves(lines string) []Elf {
 	var elves []Elf
-	var elfNumber = 0
-	for _, line := range lines {
-		if line == "" {
-			elfNumber++
-		} else {
-			elves[elfNumber].Number = strconv.Itoa(elfNumber + 1)
-			calorie, _ := strconv.Atoi(line)
-			elves[elfNumber].CaloriesSum += calorie
-		}
+	elvesOriginal := strings.Split(lines, "\n\n")
+	for index, calorieBundle := range elvesOriginal {
+		var elf Elf
+		caloriesPerElf := strings.Split(calorieBundle, "\n")
+		elf.Number = strconv.Itoa(index + 1)
+		elf.CaloriesSum = sumOfStringArray(caloriesPerElf)
+		elves = append(elves, elf)
 	}
 	return elves
 }
 
-func readAllLines(filePath string) []string {
-	file, err := os.Open(filePath)
+func sumOfStringArray(arr []string) int {
+	var result = 0
+	for _, v := range arr {
+		var number, _ = strconv.Atoi(v)
+		result += number
+	}
+	return result
+}
 
+func readAllLines(filePath string) string {
+	b, err := os.ReadFile(filePath) // just pass the file name
 	if err != nil {
-		log.Fatal(err)
+		fmt.Print(err)
 	}
-
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	var lines []string
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		lines = append(lines, line)
-	}
-
-	return lines
+	str := string(b)
+	return str
 }
