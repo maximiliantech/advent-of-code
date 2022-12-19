@@ -47,51 +47,49 @@ func playRPC(opponent []string, me []string) int {
 	rock := Rock{Score: 1, Opponent: "A", Me: "X"}
 	paper := Paper{Score: 2, Opponent: "B", Me: "Y"}
 	scissor := Scissor{Score: 3, Opponent: "C", Me: "Z"}
-	lose := 0
-	draw := 3
-	win := 6
-	score := 0
+	score := Score{Lose: 0, Draw: 3, Win: 6}
+	totalScore := 0
 	for round := 0; round < len(opponent); round++ {
 		//Rock draw
 		if (opponent[round] == rock.Opponent) && (me[round] == rock.Me) {
-			score += rock.Score + draw
+			totalScore += rock.Score + score.Draw
 		}
 		//Paper draw
 		if (opponent[round] == paper.Opponent) && (me[round] == paper.Me) {
-			score += paper.Score + draw
+			totalScore += paper.Score + score.Draw
 		}
 		//Scissor draw
 		if (opponent[round] == scissor.Opponent) && (me[round] == scissor.Me) {
-			score += scissor.Score + draw
+			totalScore += scissor.Score + score.Draw
 		}
 		//------------------------------------------
 		// Rock beats Scissor
 		if (opponent[round] == scissor.Opponent) && (me[round] == rock.Me) {
-			score += rock.Score + win
+			totalScore += rock.Score + score.Win
 		}
 		// Scissor beats Paper
 		if (opponent[round] == paper.Opponent) && (me[round] == scissor.Me) {
-			score += scissor.Score + win
+			totalScore += scissor.Score + score.Win
 		}
 		// Paper beats Rock
 		if (opponent[round] == rock.Opponent) && (me[round] == paper.Me) {
-			score += paper.Score + win
+			totalScore += paper.Score + score.Win
 		}
 		//------------------------------------------
 		// Scissor lost to Rock
 		if (opponent[round] == rock.Opponent) && (me[round] == scissor.Me) {
-			score += scissor.Score + lose
+			totalScore += scissor.Score + score.Lose
 		}
 		// Paper lost to Scissor
 		if (opponent[round] == scissor.Opponent) && (me[round] == paper.Me) {
-			score += paper.Score + lose
+			totalScore += paper.Score + score.Lose
 		}
 		// Rock lost to Paper
 		if (opponent[round] == paper.Opponent) && (me[round] == rock.Me) {
-			score += rock.Score + lose
+			totalScore += rock.Score + score.Lose
 		}
 	}
-	return score
+	return totalScore
 }
 
 func playRPCWithTarget(opponent []string, me []string) int {
