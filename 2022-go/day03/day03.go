@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 )
@@ -13,7 +14,10 @@ func main() {
 }
 
 func partOne(inputLines []string) {
-
+	for _, rucksack := range inputLines {
+		item_count := len(rucksack)
+		fmt.Println(item_count)
+	}
 }
 
 func readAllLines(filePath string) []string {
