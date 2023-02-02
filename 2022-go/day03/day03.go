@@ -2,13 +2,12 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
-	lines := readAllLines("./2022-go/day03/input_test.txt")
+	lines := readAllLines("./input_test.txt")
 	log.Println("Day 02 Part 01")
 	partOne(lines)
 }
@@ -16,7 +15,7 @@ func main() {
 func partOne(inputLines []string) {
 	for _, rucksack := range inputLines {
 		item_count := len(rucksack)
-		fmt.Println(item_count)
+		log.Println(item_count)
 	}
 }
 
