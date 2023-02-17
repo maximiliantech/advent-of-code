@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	lines := readAllLines("./2022-go/day02/input.txt")
+	lines := readAllLines("./input.txt")
 	log.Println("Day 02 Part 01")
 	partOne(lines)
 	log.Println("Day 02 Part 02")
