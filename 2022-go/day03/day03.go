@@ -12,11 +12,33 @@ func main() {
 	partOne(lines)
 }
 
-func partOne(inputLines []string) {
-	for _, rucksack := range inputLines {
-		item_count := len(rucksack)
-		log.Println(item_count)
+func partOne(rucksacks []string) {
+	var sum int
+
+	for _, rucksack := range rucksacks {
+		n := len(rucksack) / 2
+		firstCompartment := rucksack[:n]
+		secondCompartment := rucksack[n:]
+
+		item_type := findDuplicate(firstCompartment, secondCompartment)
+		sum += getPriority(item_type)
 	}
+
+	log.Println(sum)
+}
+
+func getPriority(char byte) int {
+	if char >= 'a' && char <= 'z' {
+		return int(char - 'a' + 1)
+	} else if char >= 'A' && char <= 'Z' {
+		return int(char - 'A' + 27)
+	} else {
+		return 0
+	}
+}
+
+func findDuplicate(firstCompartment string, secondCompartment string) byte {
+	return 0
 }
 
 func readAllLines(filePath string) []string {
