@@ -18,7 +18,9 @@ func main() {
 func partOne(lines []string) {
 	pairs := getPairs(lines)
 
-	count := countContainingPairs(pairs)
+	count := countPairs(pairs, func(pair1, pair2 []int) bool {
+		return ((pair1[0] <= pair2[0]) && (pair1[1] >= pair2[1])) || ((pair1[0] >= pair2[0]) && (pair1[1] <= pair2[1]))
+	})
 
 	log.Println(count)
 }
@@ -26,40 +28,18 @@ func partOne(lines []string) {
 func partTwo(lines []string) {
 	pairs := getPairs(lines)
 
-	count := countOverlappingPairs(pairs)
+	count := countPairs(pairs, func(pair1, pair2 []int) bool {
+		return (pair1[1] >= pair2[0]) && (pair1[0] <= pair2[1])
+	})
 
 	log.Println(count)
 }
 
-func countContainingPairs(pairs [][]int) int {
+func countPairs(pairs [][]int, f func(pair1, pair2 []int) bool) int {
 	count := 0
 
 	for _, pair := range pairs {
-		pair1 := []int{pair[0], pair[1]}
-		pair2 := []int{pair[2], pair[3]}
-		if contains(pair1, pair2) {
-			count++
-		}
-	}
-
-	return count
-}
-
-func contains(pair1, pair2 []int) bool {
-	return ((pair1[0] <= pair2[0]) && (pair1[1] >= pair2[1])) || ((pair1[0] >= pair2[0]) && (pair1[1] <= pair2[1]))
-}
-
-func overlaps(pair1, pair2 []int) bool {
-	return (pair1[1] >= pair2[0]) && (pair1[0] <= pair2[1])
-}
-
-func countOverlappingPairs(pairs [][]int) int {
-	count := 0
-
-	for _, pair := range pairs {
-		pair1 := []int{pair[0], pair[1]}
-		pair2 := []int{pair[2], pair[3]}
-		if overlaps(pair1, pair2) {
+		if f(pair[:2], pair[2:]) {
 			count++
 		}
 	}
