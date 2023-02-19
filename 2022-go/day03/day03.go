@@ -10,6 +10,8 @@ func main() {
 	lines := readAllLines("./input.txt")
 	log.Println("Day 02 Part 01")
 	partOne(lines)
+	log.Println("Day 03 Part 02")
+	partTwo(lines)
 }
 
 func partOne(rucksacks []string) {
@@ -25,6 +27,10 @@ func partOne(rucksacks []string) {
 	}
 
 	log.Println(sum)
+}
+
+func partTwo(rucksacks []string) {
+
 }
 
 func getPriority(char byte) int {
