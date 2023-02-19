@@ -39,21 +39,17 @@ func getPriority(char byte) int {
 
 func findDuplicate(firstCompartment string, secondCompartment string) byte {
 	occurrence_list_first_compartment := make(map[rune]int)
-	occurrence_list_second_compartment := make(map[rune]int)
 
 	for _, character := range firstCompartment {
 		occurrence_list_first_compartment[character] += 1
 	}
 
 	for _, character := range secondCompartment {
-		occurrence_list_second_compartment[character] += 1
-	}
-
-	for char := range occurrence_list_first_compartment {
-		if occurrence_list_second_compartment[char] > 0 {
-			return byte(char)
+		if occurrence_list_first_compartment[character] > 0 {
+			return byte(character)
 		}
 	}
+
 	return byte('a')
 }
 
