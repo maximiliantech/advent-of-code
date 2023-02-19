@@ -1,14 +1,14 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
-	"os"
+
+	"github.com/maximiliantech/advent-of-code/2022-go/common"
 )
 
 func main() {
-	lines := readAllLines("./input.txt")
+	lines := common.ReadAllLines("./input.txt")
 	log.Println("Day 04 Part 01")
 	partOne(lines)
 	log.Println("Day 04 Part 02")
@@ -55,24 +55,4 @@ func getPairs(lines []string) [][]int {
 		pairs[i] = pair
 	}
 	return pairs
-}
-
-func readAllLines(filePath string) []string {
-	file, err := os.Open(filePath)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	lines := make([]string, 0)
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		lines = append(lines, line)
-	}
-
-	return lines
 }
