@@ -2,18 +2,46 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
-	lines := readAllLines("./input_test.txt")
+	lines := readAllLines("./input.txt")
 	log.Println("Day 04 Part 01")
 	partOne(lines)
 }
 
 func partOne(lines []string) {
+	pairs := make([][]int, len(lines))
+	for i, line := range lines {
+		pair := make([]int, 4)
+		fmt.Sscanf(line, "%d-%d,%d-%d", &pair[0], &pair[1], &pair[2], &pair[3])
+		pairs[i] = pair
+	}
 
+	count := countContainingPairs(pairs)
+
+	log.Println(count)
+}
+
+func countContainingPairs(pairs [][]int) int {
+	count := 0
+
+	for _, pair := range pairs {
+		pair1 := []int{pair[0], pair[1]}
+		pair2 := []int{pair[2], pair[3]}
+		if contains(pair1, pair2) {
+			count++
+		}
+	}
+
+	return count
+}
+
+func contains(pair1, pair2 []int) bool {
+	return ((pair1[0] <= pair2[0]) && (pair1[1] >= pair2[1])) || ((pair1[0] >= pair2[0]) && (pair1[1] <= pair2[1]))
 }
 
 func readAllLines(filePath string) []string {
