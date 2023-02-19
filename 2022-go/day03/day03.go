@@ -8,7 +8,7 @@ import (
 
 func main() {
 	lines := readAllLines("./input.txt")
-	log.Println("Day 02 Part 01")
+	log.Println("Day 03 Part 01")
 	partOne(lines)
 	log.Println("Day 03 Part 02")
 	partTwo(lines)
@@ -30,7 +30,44 @@ func partOne(rucksacks []string) {
 }
 
 func partTwo(rucksacks []string) {
+	var sum int
+	var groups [][]string = make([][]string, (len(rucksacks) / 3))
+	var gcount int = 0
 
+	for rcount, rucksack := range rucksacks {
+		groups[gcount] = append(groups[gcount], rucksack)
+		rcount += 1
+
+		if rcount%3 == 0 {
+			gcount += 1
+		}
+	}
+
+	for _, group := range groups {
+		badge := findBadge(group)
+		sum += getPriority(badge)
+	}
+
+	log.Println(sum)
+}
+
+func findBadge(group []string) byte {
+	occurence_list_first_rucksack := make(map[rune]int)
+
+	for _, character := range group[0] {
+		occurence_list_first_rucksack[character] += 1
+	}
+
+	for _, c2 := range group[1] {
+		if occurence_list_first_rucksack[c2] > 0 {
+			for _, c3 := range group[2] {
+				if (occurence_list_first_rucksack[c3] > 0) && (c2 == c3) {
+					return byte(c3)
+				}
+			}
+		}
+	}
+	return byte('a')
 }
 
 func getPriority(char byte) int {
