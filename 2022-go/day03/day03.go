@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	lines := readAllLines("./input_test.txt")
+	lines := readAllLines("./input.txt")
 	log.Println("Day 02 Part 01")
 	partOne(lines)
 }
@@ -38,7 +38,23 @@ func getPriority(char byte) int {
 }
 
 func findDuplicate(firstCompartment string, secondCompartment string) byte {
-	return 0
+	occurrence_list_first_compartment := make(map[rune]int)
+	occurrence_list_second_compartment := make(map[rune]int)
+
+	for _, character := range firstCompartment {
+		occurrence_list_first_compartment[character] += 1
+	}
+
+	for _, character := range secondCompartment {
+		occurrence_list_second_compartment[character] += 1
+	}
+
+	for char := range occurrence_list_first_compartment {
+		if occurrence_list_second_compartment[char] > 0 {
+			return byte(char)
+		}
+	}
+	return byte('a')
 }
 
 func readAllLines(filePath string) []string {
