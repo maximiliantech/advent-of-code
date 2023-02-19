@@ -43,7 +43,7 @@ func getElvesMostCalories(elves []Elf, count int) []Elf {
 	sort.Slice(elves, func(i, j int) bool {
 		return elves[i].CaloriesSum > elves[j].CaloriesSum
 	})
-	for i, _ := range elvesMostCalories {
+	for i := range elvesMostCalories {
 		elvesMostCalories[i] = elves[i]
 	}
 	return elvesMostCalories
