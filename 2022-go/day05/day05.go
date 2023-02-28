@@ -29,14 +29,13 @@ func partOne(lines []string) {
 
 		if len(line) == 0 {
 			collect_procedure = true
-			max_height_stacks = i
+			max_height_stacks = i - 1
 			l := lines[i-1]
 			stacks_count, _ = strconv.Atoi(string(l[len(l)-2]))
 		}
-
 	}
 
-	stacks := getCrates(stacks_count, max_height_stacks)
+	stacks := getCrates(lines, stacks_count, max_height_stacks)
 
 	procedure := transformRerangeProdecure(procedure_string)
 
@@ -63,7 +62,11 @@ func transformRerangeProdecure(lines []string) [][]int {
 	return procedure
 }
 
-func getCrates(stacks_count, max_height int) [][]string {
+func getCrates(lines []string, stacks_count, max_height int) [][]string {
 	stacks := make([][]string, stacks_count)
+	for i := 1; i <= max_height; i++ {
+		s := lines[i-1]
+
+	}
 	return stacks
 }
