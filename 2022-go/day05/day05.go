@@ -45,7 +45,7 @@ func partOne(lines []string) {
 }
 
 func rerange(stacks [][]byte, procedure [][]int) [][]byte {
-	return [][]byte{}
+	return stacks
 }
 
 func getTopCrates(stacks [][]byte) string {
@@ -72,8 +72,7 @@ func getCrates(lines []string, stacks_count, max_height int) [][]byte {
 		s := lines[i]
 		for j := 0; j < stacks_count; j++ {
 			if s[j*4+1] != 32 {
-				stacks[max_height-1-i] = append(stacks[max_height-1-i], s[j*4+1])
-				log.Println(string(s[j*4+1]), j+1, max_height-1-i)
+				stacks[j] = append(stacks[j], s[j*4+1])
 			}
 		}
 	}
