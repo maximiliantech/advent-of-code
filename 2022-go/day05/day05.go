@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"strings"
+	"strconv"
 
 	"github.com/maximiliantech/advent-of-code/2022-go/common"
 )
@@ -15,33 +15,41 @@ func main() {
 }
 
 func partOne(lines []string) {
-	input_index := 0
-
-	//max_height_stacks := 0
-	//stacks_count := 0
+	max_height_stacks := 0
+	stacks_count := 0
+	procedure_string := []string{}
 
 	// check input for dimensions
 	for i, line := range lines {
-		log.Println(line, len(line), i, input_index)
-		if len(line) == 0 {
-			//max_height_stacks = i
-			//stacks_count = len(strings.Split(lines[i-1], " "))
-			log.Println(strings.Split(lines[i-1], " "))
+		collect_procedure := false
+
+		if collect_procedure {
+			procedure_string = append(procedure_string, line)
 		}
+
+		if len(line) == 0 {
+			collect_procedure = true
+			max_height_stacks = i
+			l := lines[i-1]
+			stacks_count, _ = strconv.Atoi(string(l[len(l)-2]))
+		}
+
 	}
 
-	//stacks := make([][]string, stacks_count)
+	stacks := getCrates(stacks_count, max_height_stacks)
 
-	//stacks := rerange()
-	//top_crates := getTopCrates(stacks)
-	//log.Println(top_crates)
+	procedure := transformRerangeProdecure(procedure_string)
+
+	stacks = rerange(stacks, procedure)
+	top_crates := getTopCrates(stacks)
+	log.Println(top_crates)
 }
 
-func rerange(stacks []string, procedure [][]int) []string {
-	return []string{}
+func rerange(stacks [][]string, procedure [][]int) [][]string {
+	return [][]string{}
 }
 
-func getTopCrates(stacks []string) string {
+func getTopCrates(stacks [][]string) string {
 	return ""
 }
 
@@ -53,4 +61,9 @@ func transformRerangeProdecure(lines []string) [][]int {
 		procedure[i] = p
 	}
 	return procedure
+}
+
+func getCrates(stacks_count, max_height int) [][]string {
+	stacks := make([][]string, stacks_count)
+	return stacks
 }
