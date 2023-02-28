@@ -13,7 +13,7 @@ func main() {
 	log.Println("Day 05 Part 01")
 	partOne(lines)
 	log.Println("Day 05 Part 02")
-	partOne(lines)
+	partTwo(lines)
 }
 
 func partOne(lines []string) {
@@ -90,9 +90,15 @@ func rerange(stacks [][]byte, procedure [][]int) [][]byte {
 
 func rerangeWithAtOnce(stacks [][]byte, procedure [][]int) [][]byte {
 	for _, proc := range procedure {
+		help_array := []byte{}
+
 		for i := 0; i < proc[0]; i++ {
-			stacks[proc[2]-1] = append(stacks[proc[2]-1], stacks[proc[1]-1][len(stacks[proc[1]-1])-1])
+			help_array = append(help_array, stacks[proc[1]-1][len(stacks[proc[1]-1])-1])
 			stacks[proc[1]-1] = stacks[proc[1]-1][:len(stacks[proc[1]-1])-1]
+		}
+
+		for h := len(help_array) - 1; h >= 0; h-- {
+			stacks[proc[2]-1] = append(stacks[proc[2]-1], help_array[h])
 		}
 	}
 	return stacks
