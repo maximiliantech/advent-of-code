@@ -44,12 +44,16 @@ func partOne(lines []string) {
 	log.Println(top_crates)
 }
 
-func rerange(stacks [][]string, procedure [][]int) [][]string {
-	return [][]string{}
+func rerange(stacks [][]byte, procedure [][]int) [][]byte {
+	return [][]byte{}
 }
 
-func getTopCrates(stacks [][]string) string {
-	return ""
+func getTopCrates(stacks [][]byte) string {
+	s := ""
+	for _, stack := range stacks {
+		s += string(stack[len(stack)-1])
+	}
+	return s
 }
 
 func transformRerangeProdecure(lines []string) [][]int {
@@ -62,11 +66,16 @@ func transformRerangeProdecure(lines []string) [][]int {
 	return procedure
 }
 
-func getCrates(lines []string, stacks_count, max_height int) [][]string {
-	stacks := make([][]string, stacks_count)
-	for i := 1; i <= max_height; i++ {
-		s := lines[i-1]
-
+func getCrates(lines []string, stacks_count, max_height int) [][]byte {
+	stacks := make([][]byte, stacks_count)
+	for i := max_height - 1; i >= 0; i-- {
+		s := lines[i]
+		for j := 0; j < stacks_count; j++ {
+			if s[j*4+1] != 32 {
+				stacks[max_height-1-i] = append(stacks[max_height-1-i], s[j*4+1])
+				log.Println(string(s[j*4+1]), j+1, max_height-1-i)
+			}
+		}
 	}
 	return stacks
 }
