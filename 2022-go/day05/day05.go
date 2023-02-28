@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	lines := common.ReadAllLines("./input_test.txt")
+	lines := common.ReadAllLines("./input.txt")
 	log.Println("Day 05 Part 01")
 	partOne(lines)
 }
@@ -18,13 +18,14 @@ func partOne(lines []string) {
 	max_height_stacks := 0
 	stacks_count := 0
 	procedure_string := []string{}
+	collect_procedure := false
+	procedure_count := 0
 
 	// check input for dimensions
 	for i, line := range lines {
-		collect_procedure := false
-
 		if collect_procedure {
 			procedure_string = append(procedure_string, line)
+			procedure_count += 1
 		}
 
 		if len(line) == 0 {
@@ -37,7 +38,7 @@ func partOne(lines []string) {
 
 	stacks := getCrates(lines, stacks_count, max_height_stacks)
 
-	procedure := transformRerangeProdecure(procedure_string)
+	procedure := transformRerangeProdecure(procedure_string, procedure_count)
 
 	stacks = rerange(stacks, procedure)
 	top_crates := getTopCrates(stacks)
@@ -45,6 +46,12 @@ func partOne(lines []string) {
 }
 
 func rerange(stacks [][]byte, procedure [][]int) [][]byte {
+	for _, proc := range procedure {
+		for i := 0; i < proc[0]; i++ {
+			stacks[proc[2]-1] = append(stacks[proc[2]-1], stacks[proc[1]-1][len(stacks[proc[1]-1])-1])
+			stacks[proc[1]-1] = stacks[proc[1]-1][:len(stacks[proc[1]-1])-1]
+		}
+	}
 	return stacks
 }
 
@@ -56,8 +63,8 @@ func getTopCrates(stacks [][]byte) string {
 	return s
 }
 
-func transformRerangeProdecure(lines []string) [][]int {
-	var procedure [][]int
+func transformRerangeProdecure(lines []string, count int) [][]int {
+	procedure := make([][]int, count)
 	for i, line := range lines {
 		p := make([]int, 3)
 		fmt.Sscanf(line, "move %d from %d to %d", &p[0], &p[1], &p[2])
