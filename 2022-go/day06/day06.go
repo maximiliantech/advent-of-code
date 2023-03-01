@@ -17,7 +17,7 @@ func main() {
 func partOne(lines []string) {
 	var datastream string = lines[0]
 	var marker int = 0
-	for i, _ := range datastream {
+	for i := range datastream {
 		if (i >= 3) && !duplicate(datastream[i-3:i+1]) {
 			marker = i + 1
 			break
@@ -29,7 +29,7 @@ func partOne(lines []string) {
 func partTwo(lines []string) {
 	var datastream string = lines[0]
 	var marker int = 0
-	for i, _ := range datastream {
+	for i := range datastream {
 		if (i >= 13) && !duplicate(datastream[i-13:i+1]) {
 			marker = i + 1
 			break
