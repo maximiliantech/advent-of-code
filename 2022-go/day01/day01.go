@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	lines := readAllLines("./input.txt")
+	lines := readAllLines("./2022-go/day01/input.txt")
 
 	log.Println("Day 01 Part 01")
 	partOne(lines)
