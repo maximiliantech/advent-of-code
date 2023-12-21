@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// ReadAllLines reads all lines from a file and returns them as a slice of strings.
 func ReadAllLines(filePath string) []string {
 	file, err := os.Open(filePath)
 
