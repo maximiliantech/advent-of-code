@@ -7,5 +7,6 @@ The solutions are written in Python, Swift and/or Go.
 | ---------- | ------------- |--------------------|
 | [2021-python](/2021-python/) | [2021.playground](/2021.playground/Pages/) |   |
 | | [2022.playground](/2022.playground/Pages/) | [2022-go](/2022-go/)           |
+| | | [2023-go](/2023-go/)           |
 
 [aoc]: https://adventofcode.com
