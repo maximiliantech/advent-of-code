@@ -59,25 +59,65 @@ func partTwo(lines []string) {
 
 // please create a function that solves the problem
 func readCalibrationValue2(line string) int {
+	var firstDigit int
+	var lastDigit int
 	digits := map[string]int{
-		"one":   1,
-		"two":   2,
-		"three": 3,
-		"four":  4,
-		"five":  5,
-		"six":   6,
-		"seven": 7,
-		"eight": 8,
-		"nine":  9,
+		"one":   49,
+		"two":   50,
+		"three": 51,
+		"four":  52,
+		"five":  53,
+		"six":   54,
+		"seven": 55,
+		"eight": 56,
+		"nine":  57,
 	}
 
 	// search for first occurrence of spelled out digit or actual digit
-	for i := 0; i < len(line); i++ {
+	firstDigit = searchForCalibrationValueFromLeftToRight(line, digits)
 
-	}
-	return 0
+	lastDigit = searchForCalibrationValueFromRightToLeft(line, digits)
+
+	n, _ := strconv.Atoi(string(rune(firstDigit)) + "" + string(rune(lastDigit)))
+	return n
 }
 
 func isActualDigit(char int) bool {
 	return char >= '1' && char <= '9'
+}
+
+func searchForCalibrationValueFromLeftToRight(line string, digits map[string]int) int {
+	for i := 0; i < len(line); i++ {
+		for j, k := range digits {
+			if len(j)+i <= len(line) {
+				word := line[i : i+len(j)]
+				if word == j {
+					return k
+				}
+			}
+		}
+		char := int(line[i])
+		if isActualDigit(char) {
+			return char
+		}
+	}
+	return 0
+}
+
+func searchForCalibrationValueFromRightToLeft(line string, digits map[string]int) int {
+	for i := len(line) - 1; i >= 0; i-- {
+		for j, k := range digits {
+			if i-len(j) >= 0 {
+				word := line[i-len(j)+1 : i+1]
+				if word == j {
+					return k
+				}
+			}
+		}
+		char := int(line[i])
+		if isActualDigit(char) {
+			return char
+		}
+	}
+	return 0
 }
