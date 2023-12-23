@@ -57,12 +57,12 @@ func partTwo(lines []string) {
 	log.Println(sum)
 }
 
-// please create a function that solves the problem
+// readCalibrationValue2 reads the calibration value from a line.
 func readCalibrationValue2(line string) int {
 	var firstDigit int
 	var lastDigit int
 	digits := map[string]int{
-		"one":   49,
+		"one":   49, // ASCII code for 1 etc.
 		"two":   50,
 		"three": 51,
 		"four":  52,
@@ -82,10 +82,12 @@ func readCalibrationValue2(line string) int {
 	return n
 }
 
+// isActualDigit checks if a character is a digit between 1 and 9.
 func isActualDigit(char int) bool {
 	return char >= '1' && char <= '9'
 }
 
+// searchForCalibrationValueFromLeftToRight searches for the first occurrence of a spelled out digit or actual digit from left to right
 func searchForCalibrationValueFromLeftToRight(line string, digits map[string]int) int {
 	for i := 0; i < len(line); i++ {
 		for j, k := range digits {
@@ -104,6 +106,7 @@ func searchForCalibrationValueFromLeftToRight(line string, digits map[string]int
 	return 0
 }
 
+// searchForCalibrationValueFromRightToLeft searches for the first occurrence of a spelled out digit or actual digit from right to left
 func searchForCalibrationValueFromRightToLeft(line string, digits map[string]int) int {
 	for i := len(line) - 1; i >= 0; i-- {
 		for j, k := range digits {
