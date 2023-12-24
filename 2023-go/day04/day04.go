@@ -13,6 +13,7 @@ func main() {
 	log.Println("Day 04 Part 01")
 	partOne(cards)
 	log.Println("Day 04 Part 02")
+	partTwo(cards)
 }
 
 func partOne(cards []card) {
@@ -23,11 +24,33 @@ func partOne(cards []card) {
 	log.Println(sum)
 }
 
+func partTwo(cards []card) {
+	for cardNumber := 0; cardNumber < len(cards); cardNumber++ {
+		c := cards[cardNumber]
+		matchingNumbers := c.determineMatchingNumbers()
+		// repeat for all instances of the current card (original + copies)
+		for k := 1; k <= c.instances; k++ {
+			// increase the instances for each following cards based on matchingNumbers
+			for nextCardNo := 1; nextCardNo <= matchingNumbers; nextCardNo++ {
+				cards[cardNumber+nextCardNo].instances++
+			}
+		}
+	}
+
+	// calculate the total number of scratch cards (original + copies)
+	var totalScratchCards int
+	for _, c := range cards {
+		totalScratchCards += c.instances
+	}
+	log.Println(totalScratchCards)
+}
+
 // ------- Helper functions and structs -------
 type card struct {
 	id             int
 	winningNumbers []int
 	myNumbers      []int
+	instances      int // for part two
 }
 
 // determinePoints determines the points for a card.
@@ -48,6 +71,20 @@ func (c *card) determinePoints() int {
 	return points
 }
 
+// determineMatchingNumbers determines the total number of matches between myNumbers and winningNumbers.
+func (c *card) determineMatchingNumbers() int {
+	var matchingNumbers int
+	for _, n := range c.myNumbers {
+		for _, w := range c.winningNumbers {
+			if n == w {
+				matchingNumbers++
+				break
+			}
+		}
+	}
+	return matchingNumbers
+}
+
 // readCards reads a slice of strings and returns a slice of cards.
 func readCards(lines []string) []card {
 	cards := []card{}
@@ -58,6 +95,7 @@ func readCards(lines []string) []card {
 		numbers := strings.Split(meta[1], " | ")
 		newCard.winningNumbers = readNumbers(numbers[0])
 		newCard.myNumbers = readNumbers(numbers[1])
+		newCard.instances = 1
 		cards = append(cards, *newCard)
 	}
 	return cards
