@@ -7,16 +7,13 @@ import (
 	"github.com/maximiliantech/advent-of-code/2022-go/common"
 )
 
-func main() {
-	lines := common.ReadAllLines("./input.txt")
-	log.Println("Day 01 Part 01")
-	partOne(lines)
-}
+var countZeroPartOne = 0
+var countZeroPartTwo = 0
 
-func partOne(lines []string) {
+func main() {
+	lines := common.ReadAllLines("./input_test.txt")
 
 	dial := 50
-	countZero := 0
 
 	for _, line := range lines {
 		direction := string([]rune(line)[0])
@@ -33,10 +30,13 @@ func partOne(lines []string) {
 		}
 
 		if dial == 0 {
-			countZero++
+			countZeroPartOne++
 		}
 	}
-	log.Println(countZero)
+	log.Println("Day 01 Part 01")
+	log.Println(countZeroPartOne)
+	log.Println("Day 01 Part 02")
+	log.Println(countZeroPartOne + countZeroPartTwo)
 }
 
 func turnRight(number, dial int) int {
