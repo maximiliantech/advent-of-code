@@ -7,11 +7,14 @@ import (
 	"github.com/maximiliantech/advent-of-code/2022-go/common"
 )
 
+const maxDialPosition = 99
+const minDialPosition = 0
+
 var countZeroPartOne = 0
 var countZeroPartTwo = 0
 
 func main() {
-	lines := common.ReadAllLines("./input_test.txt")
+	lines := common.ReadAllLines("./input.txt")
 
 	dial := 50
 
@@ -40,23 +43,30 @@ func main() {
 }
 
 func turnRight(number, dial int) int {
-	rest := number + dial
-	if rest >= 0 && rest <= 99 {
-		return rest
-	} else if rest < 0 && rest > 99 {
-		return 100 - rest
+	newDial := number + dial
+	if newDial >= minDialPosition && newDial <= maxDialPosition {
+		return newDial
+	} else if newDial == 100 {
+		return 0
 	} else {
-		return turnRight(rest-100, 0)
+		if dial != 0 {
+			countZeroPartTwo++
+		}
+		return turnRight(newDial-100, 0)
 	}
 }
 
 func turnLeft(number, dial int) int {
-	rest := dial - number
-	if rest < 0 && rest > -100 {
-		return 100 + rest
-	} else if rest >= 0 && rest <= 99 {
-		return rest
+	newDial := dial - number
+
+	if newDial >= minDialPosition && newDial <= maxDialPosition {
+		return newDial
+	} else if newDial == 0 {
+		return 0
 	} else {
-		return turnLeft(-rest-100, 0)
+		if dial != 0 {
+			countZeroPartTwo++
+		}
+		return turnLeft(-newDial-100, 0)
 	}
 }
