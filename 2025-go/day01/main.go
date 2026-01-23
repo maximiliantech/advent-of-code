@@ -43,30 +43,43 @@ func main() {
 }
 
 func turnRight(number, dial int) int {
-	newDial := number + dial
-	if newDial >= minDialPosition && newDial <= maxDialPosition {
-		return newDial
-	} else if newDial == 100 {
-		return 0
-	} else {
-		if dial != 0 {
-			countZeroPartTwo++
-		}
-		return turnRight(newDial-100, 0)
+	if number > maxDialPosition {
+		countZeroPartTwo++
+		return turnRight(number-maxDialPosition-1, dial)
 	}
+
+	newDial := dial + number
+
+	if newDial == 100 {
+		return 0
+	}
+
+	if newDial > maxDialPosition {
+		countZeroPartTwo++
+		return newDial - maxDialPosition - 1
+	}
+
+	return newDial
 }
 
 func turnLeft(number, dial int) int {
+	if number > maxDialPosition {
+		countZeroPartTwo++
+		return turnLeft(number-maxDialPosition-1, dial)
+	}
+
 	newDial := dial - number
 
-	if newDial >= minDialPosition && newDial <= maxDialPosition {
-		return newDial
-	} else if newDial == 0 {
+	if newDial == 0 {
 		return 0
-	} else {
+	}
+
+	if newDial < minDialPosition {
 		if dial != 0 {
 			countZeroPartTwo++
 		}
-		return turnLeft(-newDial-100, 0)
+		return newDial + maxDialPosition + 1
 	}
+
+	return newDial
 }
